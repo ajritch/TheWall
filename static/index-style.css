@@ -1,0 +1,29 @@
+header {
+	color: #fff;
+	background-color: #09b3a7;
+}
+	header h3 {
+		margin-left: 10px;
+	}
+	header * {
+		display: inline-block;
+		vertical-align: bottom;
+	}
+	header div h4 {
+		display: block;
+	}
+#main {
+	padding: 20px;
+}
+.btn {
+	margin: 5px;
+}
+.comment {
+	margin-left: 20px;
+}
+.comment-form {
+	margin-left: 0px;
+}
+.message-head {
+	display: inline-block;
+}

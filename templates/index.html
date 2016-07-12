@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "UTF-8">
+		<meta name = "description" content = "This is Annie's rendition of the Coding Dojo Wall">
+		<title>Coding Dojo Wall</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+		<link rel = 'stylesheet' type = 'text/css' href = "{{ url_for('static', filename = 'index-style.css') }}">
+	</head>
+	<body>
+		<header class = 'row container-fluid'>
+			<h3>Coding Dojo Wall</h3>
+			<div class = 'pull-right container-fluid'>
+				<h4>Welcome, {{user['first_name']}}!</h4>
+				<p class = 'pull-right'><a href = '/logoff'>Log Off</a></p>
+			</div>
+		</header>
+		<div id = "main">
+			<!-- MESSAGES -->
+			<form action = '/message' method = 'post' class = 'row container-fluid'>
+				<label>Post a message:</label>
+				<input class = 'form-control' type = 'textarea' name = 'message' required>
+				<input class = 'btn btn-success pull-right' type = 'submit' value = 'Post message'>
+			</form>
+			{% if posts %}
+				{% for post in posts %}
+					<h5 class = 'message-head'>{{post['first_name']}} {{post['last_name']}} - {{post['created_at']}}</h5>
+					<!-- DELETION -->
+					{% if post['user_id'] == session['id'] %}
+						<a href = "/delete/{{post['id']}}" class = 'btn btn-warning btn-xs message-head'>Delete</a>
+					{% endif %}
+					<p class = 'message'>{{post['message']}}</p>
+					<!-- COMMENTS ON MESSAGES -->
+					{% for comment in comments %}
+						{% if comment['message_id'] == post['id'] %}
+							<h5 class = 'comment'>{{comment['first_name']}} {{comment['last_name']}} - {{comment['created_at']}}</h5>
+							<p class = 'comment'>{{comment['comment']}}</p>
+						{% endif %}
+					{% endfor %}
+					<form action = "/comment/{{post['id']}}" method = 'post' class = 'comment-form row container-fluid'>
+						<label>Post a comment:</label>
+						<input class = 'form-control' type = 'textarea' name = 'comment' required>
+						<input class = 'btn btn-info pull-right' type = 'submit' value = 'Post comment'>
+					</form>
+				{% endfor %}
+			{% endif %}
+		</div> <!-- end of main -->
+	</body>
+</html>

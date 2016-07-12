@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang = "en">
+	<head>
+		<meta charset = "UTF-8">
+		<meta name = "description" content = "This is the login/register page for Annie's rendition of the Coding Dojo Wall assignment!">
+		<title>Welcome to the Coding Dojo Wall</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+		<link rel = 'stylesheet' type = 'text/css' href = "{{ url_for('static', filename = 'login-style.css') }}">
+
+	</head>
+	<body>
+		<header class = 'row container-fluid'>
+			<h1>Coding Dojo Wall</h1>
+		</header>
+		<h3>Sign up:</h3>
+		{% with messages = get_flashed_messages(with_categories = true) %}
+			{% if messages %}
+				{% for category, message in messages %}
+					{% if category == 'register' %}
+						<p>{{message}}</p>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+		<form role = 'form' action = '/register' method = 'post'>
+			<div class = 'form-group'>
+				<label>
+					First Name: <input class = 'form-control' type = 'text' name = 'first_name' required>
+				</label>
+			</div>
+			<div class = 'form-group'>
+				<label>
+					Last Name: <input class = 'form-control' type = 'text' name = 'last_name' required>
+				</label>
+			</div>
+			<div class = 'form-group'>
+				<label>
+					Email: <input class = 'form-control' type = 'text' name = 'email' required>
+				</label>
+			</div>
+			<div class = 'form-group'>
+				<label>
+					Password: <input class = 'form-control' type = 'password' name = 'password' required>
+				</label>
+			</div>
+			<div class = 'form-group'>
+				<label>
+					Confirm Password: <input class = 'form-control' type = 'password' name = 'confirm_password' required>
+				</label>
+			</div>
+			<input class = 'btn' type = 'submit' value = 'Register'>
+		</form>
+		<h4>Already have an account? Login:</h4>
+		{% with messages = get_flashed_messages(with_categories = true) %}
+			{% if messages %}
+				{% for category, message in messages %}
+					{% if category == 'login' %}
+						<p>{{message}}</p>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+		<form action = '/login' method = 'post'>
+			<div class = 'form-group'>	
+				<label>
+					Email: <input class = 'form-control' type = 'text' name = 'email' required>
+				</label>
+			</div>
+			<div class = 'form-group'>
+				<label>
+					Password: <input class = 'form-control' type = 'password' name = 'password' required>
+				</label>
+			</div>
+			<input class = 'btn' type = 'submit' value = "Login">
+		</form>
+	</body>
+</html>

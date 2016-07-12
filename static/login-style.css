@@ -1,0 +1,10 @@
+header {
+	color: #fff;
+	background-color: #09b3a7;
+}
+header h1 {
+	margin-left: 20px;
+}
+* {
+	margin-left: 10px;
+}
