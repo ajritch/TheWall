@@ -3,7 +3,8 @@ from mysqlconnection import MySQLConnector
 from flask_bcrypt import Bcrypt
 import re
 import os, binascii
-import datetime
+from datetime import datetime
+
 
 app = Flask(__name__)
 app.secret_key = binascii.b2a_hex(os.urandom(15))
@@ -29,7 +30,7 @@ def index():
 					"ORDER BY messages.created_at DESC")
 	messages = mysql.query_db(messages_query)
 	#get all comments
-	comments_query = ("SELECT comment, comments.created_at, comments.message_id, first_name, last_name " +
+	comments_query = ("SELECT comment, comments.created_at, comments.id as comment_id, comments.message_id, users.id as user_id, first_name, last_name " +
 					"FROM messages JOIN " +
 					"comments ON messages.id = comments.message_id " +
 					"JOIN " +
@@ -151,6 +152,14 @@ def delete(message_id):
 	delete_query2 = "DELETE FROM comments WHERE message_id = :message_id"
 	data = {'message_id': message_id}
 	mysql.query_db(delete_query2, data)
+	mysql.query_db(delete_query, data)
+	return redirect('/')
+
+#this route handles comment deletion
+@app.route('/delete/comment/<comment_id>')
+def delete_comment(comment_id):
+	delete_query = "DELETE FROM comments WHERE id = :comment_id"
+	data = {'comment_id': comment_id}
 	mysql.query_db(delete_query, data)
 	return redirect('/')
 

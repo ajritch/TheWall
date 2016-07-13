@@ -28,7 +28,7 @@
 			</form>
 			{% if posts %}
 				{% for post in posts %}
-					<h5 class = 'message-head'>{{post['first_name']}} {{post['last_name']}} - {{post['created_at']}}</h5>
+					<h5 class = 'message-head'>{{post['first_name']}} {{post['last_name']}} - {{post['created_at'].strftime("%B %d, %Y")}}</h5>
 					<!-- DELETION -->
 					{% if post['user_id'] == session['id'] %}
 						<a href = "/delete/{{post['id']}}" class = 'btn btn-warning btn-xs message-head'>Delete</a>
@@ -37,7 +37,11 @@
 					<!-- COMMENTS ON MESSAGES -->
 					{% for comment in comments %}
 						{% if comment['message_id'] == post['id'] %}
-							<h5 class = 'comment'>{{comment['first_name']}} {{comment['last_name']}} - {{comment['created_at']}}</h5>
+							<h5 class = 'comment message-head'>{{comment['first_name']}} {{comment['last_name']}} - {{comment['created_at'].strftime("%B %d, %Y")}}</h5>
+							<!-- delete comment -->
+							{% if comment['user_id'] == session['id'] %}
+								<a href = "/delete/comment/{{comment['comment_id']}}" class = 'btn btn-warning btn-xs message-head'>Delete</a>
+							{% endif %}
 							<p class = 'comment'>{{comment['comment']}}</p>
 						{% endif %}
 					{% endfor %}
